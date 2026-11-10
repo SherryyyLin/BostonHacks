@@ -13,7 +13,7 @@
     "notes": "Discovered from Luma’s public Boston event index. Open the organizer page for the full brief, eligibility and current admission terms. A public listing does not guarantee admission.",
     "website": "https://luma.com/ov7zl4rd",
     "sourceURL": "https://luma.com/ov7zl4rd",
-    "status": "Waitlist available",
+    "status": "Ended",
     "format": "In person",
     "checkedAt": "2026-11-10T17:04:14Z",
     "latitude": 42.3522258,
@@ -89,7 +89,7 @@
     "sourceURL": "https://luma.com/8iq9qh08",
     "status": "Approval required",
     "format": "In person",
-    "checkedAt": "2026-11-10T17:04:14Z"
+    "checkedAt": "2026-11-10T23:24:27Z"
   },
   {
     "id": "https://luma.com/wsyijrny",
@@ -107,7 +107,7 @@
     "sourceURL": "https://luma.com/wsyijrny",
     "status": "Registration open",
     "format": "In person",
-    "checkedAt": "2026-11-10T17:04:14Z",
+    "checkedAt": "2026-11-10T23:24:27Z",
     "latitude": 42.350136400000004,
     "longitude": -71.1045657
   },
@@ -145,7 +145,7 @@
     "sourceURL": "https://luma.com/claude-hovn",
     "status": "Approval required",
     "format": "In person",
-    "checkedAt": "2026-11-10T17:04:14Z",
+    "checkedAt": "2026-11-10T23:24:27Z",
     "latitude": 42.33728910000001,
     "longitude": -71.09128679999999
   },
@@ -201,7 +201,7 @@
     "sourceURL": "https://luma.com/0iufmn6q",
     "status": "Approval required",
     "format": "In person",
-    "checkedAt": "2026-11-10T17:04:14Z",
+    "checkedAt": "2026-11-10T23:24:27Z",
     "latitude": 42.3731581,
     "longitude": -71.12022619999999
   },
@@ -212,8 +212,8 @@
     "startDate": "2026-11-17T20:00:00Z",
     "endDate": "2026-11-17T22:00:00Z",
     "schedule": "Nov 17, 2026 03:00 PM – Nov 17, 2026 05:00 PM ET",
-    "venue": "Lovable Labs Inc",
-    "address": "Lovable Labs Inc, 7 Lincoln St, Boston, MA 02111, USA",
+    "venue": "1 Lincoln St",
+    "address": "1 Lincoln St, Boston, MA 02111, USA",
     "cost": "Free",
     "eligibility": "See organizer eligibility",
     "notes": "Discovered from Luma’s public Boston event index. Open the organizer page for the full brief, eligibility and current admission terms. A public listing does not guarantee admission.",
@@ -221,9 +221,9 @@
     "sourceURL": "https://luma.com/gfi154ck",
     "status": "Approval required",
     "format": "In person",
-    "checkedAt": "2026-11-10T17:04:14Z",
-    "latitude": 42.3526689,
-    "longitude": -71.0584114
+    "checkedAt": "2026-11-10T23:24:27Z",
+    "latitude": 42.3522258,
+    "longitude": -71.0579393
   },
   {
     "id": "https://luma.com/48pyd0o8",
@@ -241,7 +241,7 @@
     "sourceURL": "https://luma.com/48pyd0o8",
     "status": "Registration open",
     "format": "In person",
-    "checkedAt": "2026-11-10T17:04:14Z"
+    "checkedAt": "2026-11-10T23:24:27Z"
   },
   {
     "id": "https://www.mitpolicyhackathon.org/",
