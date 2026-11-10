@@ -178,5 +178,23 @@
     "status": "Registration opens soon",
     "format": "In person",
     "checkedAt": "2026-11-09T22:25:25Z"
+  },
+  {
+    "id": "linkedin:mithackingmedicine-spaulding-2027",
+    "name": "MIT HackMed × Spaulding Rehabilitation Hackathon",
+    "organizer": "MIT Hacking Medicine × Spaulding Rehabilitation Hospital",
+    "startDate": "2027-01-22T00:00:00-05:00",
+    "endDate": "2027-01-25T00:00:00-05:00",
+    "schedule": "Jan 22–24, 2027 · Exact daily start and end times are not published; check the organizer.",
+    "venue": "Spaulding Rehabilitation Hospital · Boston",
+    "address": "Spaulding Rehabilitation Hospital, Boston, MA",
+    "cost": "Check organizer",
+    "eligibility": "Interdisciplinary rehabilitation innovation teams; check the organizer for eligibility and selection requirements.",
+    "notes": "Discovered through MIT Hacking Medicine’s public LinkedIn announcement, checked November 9, 2026. The organizer names Spaulding Rehabilitation Hospital in Boston and January 22–24, 2027, with clinicians, researchers, entrepreneurs and innovators working on rehabilitation challenges. Exact daily hours, cost, full eligibility, application deadline and admission availability are unconfirmed. All-day boundaries support date filtering only; they are not confirmed opening hours. The linked application form could not be read during verification. Open the official organizer announcement for current instructions. LinkedIn is reviewed separately and is not an automated collector source.",
+    "website": "https://www.linkedin.com/company/mit-hacking-medicine/",
+    "sourceURL": "https://www.linkedin.com/company/mit-hacking-medicine/",
+    "status": "Applications announced · Check organizer",
+    "format": "In person",
+    "checkedAt": "2026-11-09T23:42:22Z"
   }
 ]

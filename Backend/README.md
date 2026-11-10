@@ -2,7 +2,7 @@
 
 This is a separate Python backend extension beyond the SwiftUI course. It produces the app-compatible **top-level JSON event array**, automatically discovers new listings and refreshes registration states where the source publishes them. No API key or paid account is required.
 
-**The schedule starts only after you place this project in a repository and enable its GitHub Action.** This deliverable does not create a repository, publish user data or run a persistent hosted service by itself.
+**Deployed:** [SherryyyLin/BostonHacks](https://github.com/SherryyyLin/BostonHacks). The first [GitHub Actions run](https://github.com/SherryyyLin/BostonHacks/actions/runs/42716474929) succeeded on November 9, 2026 at 5:58 PM Eastern: 15 tests passed, all seven source jobs succeeded, and 16 event records were committed. The workflow is enabled on the default branch with a three-hour schedule. GitHub may queue or delay scheduled runs.
 
 ## Sources and update rules
 
@@ -33,7 +33,13 @@ Outputs:
 
 The collector uses HTTPS, timeouts, response-size bounds and atomic output replacement. Partial failures are visible in `status.json`. It does not send messages, join waitlists or register anyone.
 
-## Enable recurring hosting
+## Existing deployment and setup for another repository
+
+Live event feed: `https://raw.githubusercontent.com/SherryyyLin/BostonHacks/main/Backend/feeds/events.json`
+
+Source health: `https://raw.githubusercontent.com/SherryyyLin/BostonHacks/main/Backend/feeds/status.json`
+
+The following steps document how to reproduce the deployment in another repository.
 
 1. Copy the **project directory contents** to a public GitHub repository you control, with `App/`, `Backend/` and `.github/workflows/update-events.yml` at its root. For a feed-only repository, include the reviewed snapshot at `App/verified-events.json`; the iOS project is optional.
 2. Open the repository’s **Actions** tab and enable workflows if GitHub asks. Allow GitHub Actions to write repository contents under **Settings → Actions → General → Workflow permissions**. No personal access token needs to be put in a file.
@@ -48,7 +54,7 @@ The collector uses HTTPS, timeouts, response-size bounds and atomic output repla
 
 5. Verify that the app can load the feed and that its source timestamps and admission states update after a later workflow run. GitHub may delay scheduled jobs, and schedules in inactive public repositories may be disabled; monitor the Actions history and `status.json`.
 
-Only event data is needed for hosting. Do not copy your local address, signing material, account credentials or private source files into the repository. Public repositories expose the committed JSON and its history. No hosting action has been performed here.
+Only event data is needed for hosting. Do not copy your local address, signing material, account credentials or private source files into the repository. Public repositories expose the committed JSON and its history. This project’s public repository contains only the app/backend deliverables and public event data; the course archive, exams, local account credentials and personal starting addresses were excluded.
 
 GitHub Pages is unnecessary for the raw endpoint. If you prefer Pages or another static host, publish the same two JSON files with HTTPS and point the app to the direct `events.json` URL. Keep the collector schedule running separately.
 

@@ -133,6 +133,8 @@ def parse_luma(payload: dict, now: datetime) -> list[dict]:
     result = []
     for entry in payload["entries"]:
         e = entry.get("event") or {}
+        if e.get("visibility", "public") != "public":
+            continue
         title = e.get("name", "")
         if not is_hackathon(title):
             continue

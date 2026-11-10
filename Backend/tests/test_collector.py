@@ -43,6 +43,10 @@ class CollectorTests(unittest.TestCase):
         e["event"]["cancelled_at"] = "2026-11-08T12:00:00Z"
         self.assertEqual(c.luma_status(e), "Cancelled")
 
+    def test_nonpublic_discovery_row_is_not_republished(self):
+        e = entry(); e["event"]["visibility"] = "private"
+        self.assertEqual(c.parse_luma({"entries": [e]}, NOW), [])
+
     def test_hidden_location_never_becomes_pin_or_address(self):
         e = entry()
         e["event"]["geo_address_info"]["mode"] = "obfuscated"
