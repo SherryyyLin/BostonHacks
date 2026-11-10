@@ -66,6 +66,7 @@ struct ContentView: View {
     @Query private var settings: [FeedSettings]
     @Environment(\.modelContext) private var modelContext
     @Environment(\.scenePhase) private var scenePhase
+    @EnvironmentObject private var account: AccountStore
     @State private var departureAddress = ""
     @State private var startingLatitude: Double?
     @State private var startingLongitude: Double?
@@ -74,9 +75,13 @@ struct ContentView: View {
     @State private var rangeEnd = defaultRangeEnd()
     @State private var calendarStep = 0
     @State private var showCalendar = false
+    @State private var showSingleDay = false
     @State private var datesConfirmed = false
     @State private var showResults = false
     @State private var selectedTopic: String?
+    @State private var pendingTopicNavigation = false
+    @State private var showAccount = false
+    @State private var showGuide = false
     @State private var isRefreshing = false
     @State private var didLoad = false
     @State private var message = ""
@@ -137,12 +142,20 @@ struct ContentView: View {
             .onChange(of: scenePhase) { _, phase in
                 if phase == .active { Task { await refreshEvents() } }
             }
-            .sheet(isPresented: $showCalendar) {
+            .sheet(isPresented: $showCalendar, onDismiss: {
+                if pendingTopicNavigation && datesConfirmed { showResults = true }
+                pendingTopicNavigation = false
+            }) {
                 DateRangeSheet(startDate: $rangeStart, endDate: $rangeEnd, initialStep: calendarStep) { datesConfirmed = true }
             }
             .sheet(isPresented: $showAddressSearch) {
                 AddressSearchView(address: $departureAddress, latitude: $startingLatitude, longitude: $startingLongitude)
             }
+            .sheet(isPresented: $showSingleDay) {
+                SingleDaySheet(startDate: $rangeStart, endDate: $rangeEnd) { datesConfirmed = true }
+            }
+            .sheet(isPresented: $showAccount) { AccountView() }
+            .sheet(isPresented: $showGuide) { WelcomeView { showGuide = false } }
             .navigationDestination(isPresented: $showResults) {
                 EventResultsView(startDate: rangeStart, endDate: rangeEnd, departureAddress: departureAddress,
                                  startingLatitude: startingLatitude, startingLongitude: startingLongitude,
@@ -159,6 +172,14 @@ struct ContentView: View {
                 Text("BOS / HACK").font(.system(size: 14, weight: .bold, design: .monospaced)).tracking(1)
             }
             Spacer()
+            Button { showGuide = true } label: {
+                Image(systemName: "sparkles").font(.custom("Montserrat-Regular", size: 14))
+                    .foregroundStyle(AppPalette.ink).frame(width: 35, height: 35)
+            }.buttonStyle(.glassProminent).tint(AppPalette.frostBlue).accessibilityLabel("Replay welcome guide")
+            Button { showAccount = true } label: {
+                Image(systemName: account.user == nil ? "person.crop.circle" : "person.crop.circle.fill")
+                    .foregroundStyle(AppPalette.ink).frame(width: 35, height: 35)
+            }.buttonStyle(.glassProminent).tint(AppPalette.frostBlue).accessibilityLabel("Your account")
             Button { Task { await refreshEvents() } } label: {
                 Image(systemName: isRefreshing ? "hourglass" : "arrow.clockwise")
                     .font(.custom("Montserrat-SemiBold", size: 14)).frame(width: 42, height: 42)
@@ -226,12 +247,22 @@ struct ContentView: View {
                 rangeButton("END", date: rangeEnd, step: 1)
             }
             HStack {
+                Button { selectToday() } label: {
+                    Label("Today", systemImage: "sun.max").foregroundStyle(AppPalette.ink)
+                }.buttonStyle(.glassProminent).tint(AppPalette.lavender)
+                Button { showSingleDay = true } label: {
+                    Label("One day", systemImage: "calendar").foregroundStyle(AppPalette.ink)
+                }.buttonStyle(.glassProminent).tint(AppPalette.dustyPink)
+                Spacer()
+            }.font(.custom("Montserrat-Medium", size: 11))
+            HStack {
                 Button("Previous week") { moveWeek(-1) }
                 Spacer()
                 Button("This week") { rangeStart = defaultRangeStart(); rangeEnd = defaultRangeEnd(); datesConfirmed = true }
                 Spacer()
                 Button("Next week") { moveWeek(1) }
-            }.font(.custom("Montserrat-Medium", size: 10)).tint(AppPalette.ink)
+            }.font(.custom("Montserrat-Medium", size: 10)).tint(AppPalette.frostBlue)
+                .foregroundStyle(AppPalette.ink).buttonStyle(.glassProminent)
             Text("BOSTON TIME · ET").font(.system(size: 8, weight: .medium, design: .monospaced)).tracking(1)
                 .foregroundStyle(AppPalette.ink.opacity(0.75))
         }.padding(18).background(AppPalette.glacierBlue.opacity(0.6), in: RoundedRectangle(cornerRadius: 22))
@@ -239,13 +270,17 @@ struct ContentView: View {
     }
 
     func topicSection() -> some View {
-        let topics = ["AI & Data", "Health", "Web3", "Climate", "Student", "Design & Games"]
+        let topics = EventTopic.names
         return VStack(alignment: .leading, spacing: 14) {
             Text("What sparks your curiosity?").font(.custom("Montserrat-Bold", size: 20))
             Text("Pick a theme, or explore everything.").font(.custom("Montserrat-Regular", size: 12))
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 140))], spacing: 12) {
                 ForEach(topics, id: \.self) { topic in
-                    Button { selectedTopic = selectedTopic == topic ? nil : topic } label: {
+                    Button {
+                        selectedTopic = topic
+                        if datesConfirmed { showResults = true }
+                        else { pendingTopicNavigation = true; calendarStep = 0; showCalendar = true }
+                    } label: {
                         Text(topic).font(.custom("Montserrat-Medium", size: 12))
                             .frame(maxWidth: .infinity).padding(.vertical, 10)
                             .foregroundStyle(selectedTopic == topic ? Color.white : AppPalette.ink)
@@ -321,6 +356,14 @@ struct ContentView: View {
             print("😡 ERROR: Could not move calendar by \(amount) weeks.")
             return
         }
+        rangeStart = start
+        rangeEnd = end
+        datesConfirmed = true
+    }
+
+    func selectToday() {
+        let start = bostonCalendar().startOfDay(for: Date())
+        guard let end = bostonCalendar().date(byAdding: .day, value: 1, to: start) else { return }
         rangeStart = start
         rangeEnd = end
         datesConfirmed = true
@@ -481,6 +524,8 @@ struct EventDetailView: View {
     let hackathon: Hackathon
     let departureAddress: String
     @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject private var account: AccountStore
+    @State private var showAccount = false
     @State private var message = ""
 
     var body: some View {
@@ -489,13 +534,7 @@ struct EventDetailView: View {
                 Text(hackathon.format.uppercased()).font(.caption).bold().foregroundStyle(AppPalette.accent)
                 Text(hackathon.name).font(.custom("Montserrat-Bold", size: 32))
                 Text(hackathon.organizer).font(.subheadline).foregroundStyle(.secondary)
-                if let url = webURL(hackathon.website) {
-                    Link(hackathon.status + " ↗", destination: url)
-                        .font(.subheadline.weight(.semibold)).foregroundStyle(AppPalette.ink)
-                        .padding(.horizontal, 15).padding(.vertical, 12)
-                        .background(AppPalette.powderBlue.opacity(0.25), in: RoundedRectangle(cornerRadius: 14))
-                        .buttonStyle(.glassProminent)
-                }
+                EventStatusView(event: hackathon)
                 VStack(alignment: .leading, spacing: 12) {
                     Text(hackathon.schedule).bold()
                     Text("Times are in Boston / Eastern Time.").font(.caption).foregroundStyle(.secondary)
@@ -509,18 +548,29 @@ struct EventDetailView: View {
                     }
                     if hackathon.eligibility.localizedCaseInsensitiveContains("see organizer") || hackathon.eligibility.localizedCaseInsensitiveContains("check organizer") {
                         if let url = webURL(hackathon.website) { Link("Check eligibility ↗", destination: url).buttonStyle(.glassProminent).tint(AppPalette.frostBlue).foregroundStyle(AppPalette.ink) }
-                    } else { Text("Eligibility: \(hackathon.eligibility)").font(.subheadline) }
+                    } else {
+                        Label(hackathon.eligibility, systemImage: "person.3.fill")
+                            .font(.custom("Montserrat-Regular", size: 13))
+                    }
                 }
                 .padding().frame(maxWidth: .infinity, alignment: .leading)
                 .background(AppPalette.accent.opacity(0.08)).clipShape(RoundedRectangle(cornerRadius: 18))
                 Text("About the event").font(.title2).bold()
                 Text(eventDescription(hackathon.notes))
-                Button(hackathon.isFavorite ? "Remove from saved" : "Save event", systemImage: "bookmark") {
-                    toggleFavorite()
-                }.buttonStyle(.glassProminent).tint(AppPalette.ink).foregroundStyle(.white)
+                Button {
+                    if account.user == nil { showAccount = true }
+                    else { Task { await account.toggleSaved(hackathon) } }
+                } label: {
+                    Label(account.isSaved(hackathon) ? "Remove from saved" : "Save event", systemImage: "bookmark")
+                        .font(.custom("Montserrat-SemiBold", size: 13)).foregroundStyle(.white)
+                }.buttonStyle(.glassProminent).tint(AppPalette.ink)
+                    .disabled(account.savingIDs.contains(hackathon.sourceID))
+                if let error = account.errorMessage { Text(error).font(.caption).foregroundStyle(AppPalette.pinkInk) }
                 if let url = webURL(hackathon.website) {
-                    Link("Registration & event page ↗", destination: url)
-                        .buttonStyle(.glassProminent).tint(AppPalette.ink).foregroundStyle(.white)
+                    Link(destination: url) {
+                        Label("Event page", systemImage: "arrow.up.right.square")
+                            .font(.custom("Montserrat-SemiBold", size: 13)).foregroundStyle(.white)
+                    }.buttonStyle(.glassProminent).tint(AppPalette.ink)
                 }
                 if hackathon.format != "Online" && !hackathon.address.isEmpty {
                     Text("Getting there").font(.title2).bold()
@@ -557,18 +607,7 @@ struct EventDetailView: View {
         .foregroundStyle(AppPalette.ink)
         .navigationTitle("Event details")
         .toolbar(.visible, for: .navigationBar)
-    }
-
-    func toggleFavorite() {
-        hackathon.isFavorite = !hackathon.isFavorite
-        do {
-            try modelContext.save()
-            message = ""
-        } catch {
-            modelContext.rollback()
-            message = "Could not save this change. Please try again."
-            print("😡 ERROR: Could not save favorite for \(hackathon.name). \(error.localizedDescription)")
-        }
+        .sheet(isPresented: $showAccount) { AccountView() }
     }
 
     func eventDescription(_ notes: String) -> String {
@@ -595,6 +634,7 @@ func defaultRangeEnd() -> Date {
 }
 
 func rangeTitle(from start: Date, to end: Date) -> String {
+    if start == .distantPast && end == .distantFuture { return "All saved events" }
     return dateText(start, pattern: "MMM d, h:mm a") + " → " + dateText(end, pattern: "MMM d, h:mm a")
 }
 

@@ -12,19 +12,21 @@ struct EventResultsView: View {
     // Classroom @Query + @State: live saved models, with this screen's filters.
     @Query(sort: \Hackathon.startDate) private var events: [Hackathon]
     @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject private var account: AccountStore
     @State private var filterStart: Date
     @State private var filterEnd: Date
     @State private var selectedTopic: String?
     @State private var favoritesOnly = false
     @State private var showCalendar = false
     @State private var showMap = false
+    @State private var showAccount = false
     @State private var isFindingDistances = false
     @State private var message = ""
 
-    private let topics = ["AI & Data", "Health", "Web3", "Climate", "Student", "Design & Games"]
+    private let topics = EventTopic.names
 
     init(startDate: Date, endDate: Date, departureAddress: String,
-         startingLatitude: Double?, startingLongitude: Double?, initialTopic: String? = nil) {
+         startingLatitude: Double?, startingLongitude: Double?, initialTopic: String? = nil, savedOnly: Bool = false) {
         self.startDate = startDate
         self.endDate = endDate
         self.departureAddress = departureAddress
@@ -33,7 +35,8 @@ struct EventResultsView: View {
         self.initialTopic = initialTopic
         self._filterStart = State(initialValue: startDate)
         self._filterEnd = State(initialValue: endDate)
-        self._selectedTopic = State(initialValue: initialTopic == "All" ? nil : initialTopic)
+        self._selectedTopic = State(initialValue: EventTopic.names.contains(initialTopic ?? "") ? initialTopic : nil)
+        self._favoritesOnly = State(initialValue: savedOnly)
     }
 
     var body: some View {
@@ -76,7 +79,7 @@ struct EventResultsView: View {
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
         .background(AppPalette.backgroundGradient).foregroundStyle(AppPalette.ink)
-        .navigationTitle("Hackathon results")
+        .navigationTitle(favoritesOnly ? "Saved events" : "Hackathon results")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.visible, for: .navigationBar)
         .tint(AppPalette.ink)
@@ -90,6 +93,11 @@ struct EventResultsView: View {
                                  startingLatitude: startingLatitude, startingLongitude: startingLongitude)
             }
         }
+        .sheet(isPresented: $showAccount) { AccountView() }
+        .onChange(of: account.user?.uid) { _, uid in
+            if uid == nil && favoritesOnly { showAccount = true }
+        }
+        .onAppear { if favoritesOnly && account.user == nil { showAccount = true } }
         .task(id: distanceSignature()) { await locateVenues() }
     }
 
@@ -99,23 +107,21 @@ struct EventResultsView: View {
             Text("YOUR NEXT CHAPTER")
                 .font(.custom("Montserrat-SemiBold", size: 10)).tracking(1.8)
                 .foregroundStyle(AppPalette.secondary)
-            Text("Your next\nhackathon.")
+            Text(favoritesOnly ? "Saved for\nlater." : "Your next\nhackathon.")
                 .font(.custom("Montserrat-Bold", size: 34)).lineSpacing(-1)
-            Text("A date in your calendar. An idea worth building.")
+            Text(favoritesOnly ? "Your favorites, ready when you are." : "A date in your calendar. An idea worth building.")
                 .font(.custom("Montserrat-Regular", size: 13))
                 .foregroundStyle(AppPalette.ink.opacity(0.8))
         }.padding(.top, 8)
 
         rangeSummary()
+        dayPicker()
         topicPicker()
 
         HStack {
-            Text("\(results().count) EVENTS")
+            Text("\(results().count) \(favoritesOnly ? "SAVED EVENTS" : "EVENTS")")
                 .font(.custom("Montserrat-SemiBold", size: 11)).tracking(1)
             Spacer()
-            Toggle("Saved only", isOn: $favoritesOnly)
-                .font(.custom("Montserrat-Medium", size: 12))
-                .fixedSize().tint(AppPalette.ink)
         }
 
         if hasOrigin() {
@@ -150,14 +156,17 @@ struct EventResultsView: View {
     func emptyResults() -> some View {
         return VStack(alignment: .leading, spacing: 12) {
             Image(systemName: "calendar.badge.magnifyingglass").font(.title)
-            Text("No events in this window yet.")
+            Text(favoritesOnly && account.user == nil ? "Sign in to see your saved events." : isAllSavedDates() ? "No saved events yet." : favoritesOnly ? "No saved events in this window yet." : "No events in this window yet.")
                 .font(.custom("Montserrat-SemiBold", size: 18))
-            Text("Try different dates, choose All topics, or turn off Saved only. Newly published listings appear here when live updates arrive.")
+            Text(favoritesOnly && account.user == nil ? "Your saved hackathons belong to your account and sync across your devices." : "Try a different day, edit your date range, or choose All topics. New listings appear when live updates arrive.")
                 .font(.custom("Montserrat-Regular", size: 13)).lineSpacing(4)
-            if selectedTopic != nil || favoritesOnly {
-                Button("Clear topic & saved filters") {
+            if favoritesOnly && account.user == nil {
+                Button("Sign in") { showAccount = true }
+                    .font(.custom("Montserrat-SemiBold", size: 12)).foregroundStyle(.white)
+                    .buttonStyle(.glassProminent).tint(AppPalette.ink)
+            } else if selectedTopic != nil {
+                Button("Show all topics") {
                     selectedTopic = nil
-                    favoritesOnly = false
                 }
                 .font(.custom("Montserrat-SemiBold", size: 12)).foregroundStyle(.white)
                 .buttonStyle(.glassProminent).tint(AppPalette.ink)
@@ -169,7 +178,13 @@ struct EventResultsView: View {
 
     func rangeSummary() -> some View {
         return VStack(alignment: .leading, spacing: 14) {
-            HStack(alignment: .top, spacing: 14) {
+            if isAllSavedDates() {
+                Label("All saved events", systemImage: "bookmark.fill")
+                    .font(.custom("Montserrat-SemiBold", size: 17))
+                Text("Every date. Choose a day below to narrow your favorites.")
+                    .font(.custom("Montserrat-Regular", size: 12)).lineSpacing(3)
+            } else {
+              HStack(alignment: .top, spacing: 14) {
                 VStack(alignment: .leading, spacing: 6) {
                     Text("START").font(.custom("Montserrat-SemiBold", size: 9)).tracking(1)
                     Text(dateText(filterStart, pattern: "MMM d, yyyy"))
@@ -185,8 +200,8 @@ struct EventResultsView: View {
                     Text(dateText(filterEnd, pattern: "h:mm a"))
                         .font(.custom("Montserrat-Regular", size: 12))
                 }.frame(maxWidth: .infinity, alignment: .leading)
-            }
-            HStack {
+              }
+              HStack {
                 Text("BOSTON TIME · ET").font(.custom("Montserrat-Medium", size: 9))
                 Spacer()
                 Button {
@@ -196,8 +211,13 @@ struct EventResultsView: View {
                         .font(.custom("Montserrat-SemiBold", size: 11)).foregroundStyle(.white)
                 }.buttonStyle(.glassProminent).tint(AppPalette.ink)
                     .accessibilityIdentifier("results-edit-dates")
+              }
             }
         }.padding(18).background(AppPalette.heroGradient, in: RoundedRectangle(cornerRadius: 22))
+    }
+
+    func isAllSavedDates() -> Bool {
+        return favoritesOnly && filterStart == Date.distantPast && filterEnd == Date.distantFuture
     }
 
     func topicPicker() -> some View {
@@ -207,6 +227,54 @@ struct EventResultsView: View {
                 ForEach(topics, id: \.self) { topic in topicButton(topic, value: topic) }
             }.padding(.vertical, 4)
         }
+    }
+
+    func dayPicker() -> some View {
+        return VStack(alignment: .leading, spacing: 10) {
+            Text("PICK A DAY").font(.custom("Montserrat-SemiBold", size: 10)).tracking(1)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 10) {
+                    ForEach(upcomingDays(), id: \.self) { date in dayButton(date) }
+                }.padding(.vertical, 5)
+            }
+        }
+    }
+
+    func dayButton(_ date: Date) -> some View {
+        let calendar = bostonCalendar()
+        let selected = calendar.isDate(filterStart, inSameDayAs: date) && filterStart == calendar.startOfDay(for: date) &&
+            calendar.date(byAdding: .day, value: 1, to: filterStart) == filterEnd
+        return Button {
+            let start = calendar.startOfDay(for: date)
+            guard let end = calendar.date(byAdding: .day, value: 1, to: start) else {
+                message = "Could not select this day. Please use Edit dates."
+                print("ERROR: Could not form a Boston day interval.")
+                return
+            }
+            filterStart = start
+            filterEnd = end
+        } label: {
+            VStack(spacing: 6) {
+                Text(calendar.isDateInToday(date) ? "Today" : dateText(date, pattern: "EEE"))
+                    .font(.custom("Montserrat-SemiBold", size: 10))
+                Text(dateText(date, pattern: "d")).font(.custom("Montserrat-SemiBold", size: 23))
+                Text(dateText(date, pattern: "MMM").uppercased())
+                    .font(.custom("Montserrat-Medium", size: 9))
+            }.foregroundStyle(AppPalette.ink).frame(minWidth: 51).padding(.vertical, 7)
+        }
+        .buttonStyle(.glassProminent).tint(selected ? AppPalette.lavender : AppPalette.dustyPink.opacity(0.5))
+        .accessibilityLabel(dateText(date, pattern: "EEEE, MMMM d, yyyy"))
+        .accessibilityAddTraits(selected ? .isSelected : [])
+    }
+
+    func upcomingDays() -> [Date] {
+        let calendar = bostonCalendar()
+        let today = calendar.startOfDay(for: Date())
+        var days: [Date] = []
+        for offset in 0..<7 {
+            if let date = calendar.date(byAdding: .day, value: offset, to: today) { days.append(date) }
+        }
+        return days
     }
 
     func topicButton(_ title: String, value: String?) -> some View {
@@ -246,6 +314,11 @@ struct EventResultsView: View {
             }.buttonStyle(.plain)
             Text(event.schedule).font(.custom("Montserrat-Regular", size: 11))
                 .foregroundStyle(AppPalette.ink.opacity(0.8))
+            if let team = teamSummary(event.eligibility) {
+                Label(team, systemImage: "person.3.fill")
+                    .font(.custom("Montserrat-Regular", size: 11)).lineLimit(2)
+                    .foregroundStyle(AppPalette.ink.opacity(0.8))
+            }
             if let distance = EventDistance.kilometers(event: event, latitude: startingLatitude, longitude: startingLongitude) {
                 Label(String(format: distance < 1 ? "%.0f m away · straight-line" : "%.1f km away · straight-line", distance < 1 ? distance * 1_000 : distance), systemImage: "location")
                     .font(.custom("Montserrat-SemiBold", size: 10))
@@ -255,16 +328,9 @@ struct EventResultsView: View {
             }
             Rectangle().fill(AppPalette.line).frame(height: 1)
             HStack {
-                if let url = webURL(event.website) {
-                    Link(destination: url) {
-                        HStack(spacing: 5) {
-                            Text(event.status)
-                            Image(systemName: "arrow.up.right").font(.caption2)
-                        }.font(.custom("Montserrat-SemiBold", size: 10)).foregroundStyle(.white)
-                    }.buttonStyle(.glassProminent).tint(AppPalette.ink)
-                }
+                EventStatusView(event: event)
                 Spacer(minLength: 0)
-                if event.isFavorite {
+                if account.isSaved(event) {
                     Image(systemName: "bookmark.fill").foregroundStyle(AppPalette.ink)
                         .accessibilityLabel("Saved event")
                 }
@@ -273,10 +339,16 @@ struct EventResultsView: View {
             .overlay(RoundedRectangle(cornerRadius: 23).stroke(AppPalette.line.opacity(0.65)))
     }
 
+    func teamSummary(_ eligibility: String) -> String? {
+        guard let range = eligibility.range(of: "team", options: .caseInsensitive) else { return nil }
+        let remaining = String(eligibility[range.lowerBound...])
+        return remaining.components(separatedBy: CharacterSet(charactersIn: ".;")).first
+    }
+
     func results() -> [Hackathon] {
         var matches: [Hackathon] = []
         for event in topicEvents() {
-            if event.startDate < filterEnd && event.endDate > filterStart && (!favoritesOnly || event.isFavorite) {
+            if event.startDate < filterEnd && event.endDate > filterStart && (!favoritesOnly || account.isSaved(event)) {
                 matches.append(event)
             }
         }
@@ -287,26 +359,9 @@ struct EventResultsView: View {
         guard let selectedTopic else { return events }
         var matches: [Hackathon] = []
         for event in events {
-            if matchesTopic(event, topic: selectedTopic) { matches.append(event) }
+            if EventTopic.category(for: event) == selectedTopic { matches.append(event) }
         }
         return matches
-    }
-
-    func matchesTopic(_ event: Hackathon, topic: String) -> Bool {
-        let combined = [event.name, event.organizer, event.notes, event.eligibility].joined(separator: " ").lowercased()
-        let text = " " + combined.components(separatedBy: CharacterSet.alphanumerics.inverted).joined(separator: " ") + " "
-        let keywords: [String]
-        switch topic {
-        case "AI & Data": keywords = [" ai ", "artificial intelligence", "machine learning", "data", "agent"]
-        case "Health": keywords = ["health", "medical", "medicine", "oncology", "biosecurity", "openbio", "biotech"]
-        case "Web3": keywords = ["blockchain", "web3", "crypto", "ethereum", "solana", "bitcoin"]
-        case "Climate": keywords = ["sustainab", "climate", "environment", "green fund", "clean energy"]
-        case "Student": keywords = ["student", "university", "college", "undergraduate", "graduate"]
-        case "Design & Games": keywords = ["design", "creative", "game", "gaming", " ux ", " ui "]
-        default: return true
-        }
-        for keyword in keywords { if text.contains(keyword) { return true } }
-        return false
     }
 
     func hasOrigin() -> Bool {
@@ -315,7 +370,9 @@ struct EventResultsView: View {
 
     func distanceSignature() -> String {
         var parts = [String(startingLatitude ?? 0), String(startingLongitude ?? 0),
-                     String(filterStart.timeIntervalSince1970), String(filterEnd.timeIntervalSince1970), selectedTopic ?? "All"]
+                     String(filterStart.timeIntervalSince1970), String(filterEnd.timeIntervalSince1970), selectedTopic ?? "All",
+                     account.user?.uid ?? "guest", favoritesOnly ? "saved" : "all"]
+        if favoritesOnly { parts.append(account.savedIDs.sorted().joined(separator: ",")) }
         for event in topicEvents() {
             if event.startDate < filterEnd && event.endDate > filterStart {
                 parts.append(event.sourceID + event.address + String(event.startDate.timeIntervalSince1970))

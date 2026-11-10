@@ -4,13 +4,16 @@
 	classes = {};
 	objectVersion = 77;
 	objects = {
+		A10000000000000000000020 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000024 /* FirebaseCore */; };
+		A10000000000000000000021 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000025 /* FirebaseAuth */; };
+		A10000000000000000000022 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000026 /* FirebaseFirestore */; };
 		A10000000000000000000001 /* BostonHacks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BostonHacks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A10000000000000000000002 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A10000000000000000000003 /* App */ = {isa = PBXFileSystemSynchronizedRootGroup; path = App; sourceTree = "<group>"; };
 		A10000000000000000000005 /* Main */ = {isa = PBXGroup; children = (A10000000000000000000003 /* App */, A10000000000000000000006 /* Config */, A10000000000000000000007 /* Products */, ); sourceTree = "<group>"; };
 		A10000000000000000000006 /* Config */ = {isa = PBXGroup; children = (A10000000000000000000002 /* Info.plist */, ); path = Config; sourceTree = "<group>"; };
 		A10000000000000000000007 /* Products */ = {isa = PBXGroup; children = (A10000000000000000000001 /* BostonHacks.app */, ); name = Products; sourceTree = "<group>"; };
-		A10000000000000000000008 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		A10000000000000000000008 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000020 /* FirebaseCore in Frameworks */, A10000000000000000000021 /* FirebaseAuth in Frameworks */, A10000000000000000000022 /* FirebaseFirestore in Frameworks */, ); runOnlyForDeploymentPostprocessing = 0; };
 		A10000000000000000000009 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
 		A1000000000000000000000A /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
 		A1000000000000000000000B /* BostonHacks */ = {
@@ -21,7 +24,7 @@
 			dependencies = ();
 			fileSystemSynchronizedGroups = (A10000000000000000000003 /* App */, );
 			name = BostonHacks;
-			packageProductDependencies = ();
+			packageProductDependencies = (A10000000000000000000024 /* FirebaseCore */, A10000000000000000000025 /* FirebaseAuth */, A10000000000000000000026 /* FirebaseFirestore */, );
 			productName = BostonHacks;
 			productReference = A10000000000000000000001 /* BostonHacks.app */;
 			productType = "com.apple.product-type.application";
@@ -88,6 +91,7 @@
 			knownRegions = (en, Base, );
 			mainGroup = A10000000000000000000005 /* Main */;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (A10000000000000000000023 /* firebase-ios-sdk */, );
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A10000000000000000000007 /* Products */;
 			projectDirPath = "";
@@ -105,6 +109,14 @@
 			buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; CLANG_ENABLE_OBJC_ARC = YES; CLANG_WARN_DOCUMENTATION_COMMENTS = YES; COPY_PHASE_STRIP = NO; DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym"; ENABLE_NS_ASSERTIONS = NO; GCC_C_LANGUAGE_STANDARD = gnu17; IPHONEOS_DEPLOYMENT_TARGET = 26.0; SDKROOT = iphoneos; SWIFT_COMPILATION_MODE = wholemodule; SWIFT_OPTIMIZATION_LEVEL = "-O"; };
 			name = Release;
 		};
+		A10000000000000000000023 /* firebase-ios-sdk */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {kind = upToNextMajorVersion; minimumVersion = 12.0.0; };
+		};
+		A10000000000000000000024 /* FirebaseCore */ = {isa = XCSwiftPackageProductDependency; package = A10000000000000000000023 /* firebase-ios-sdk */; productName = FirebaseCore; };
+		A10000000000000000000025 /* FirebaseAuth */ = {isa = XCSwiftPackageProductDependency; package = A10000000000000000000023 /* firebase-ios-sdk */; productName = FirebaseAuth; };
+		A10000000000000000000026 /* FirebaseFirestore */ = {isa = XCSwiftPackageProductDependency; package = A10000000000000000000023 /* firebase-ios-sdk */; productName = FirebaseFirestore; };
 	};
 	rootObject = A1000000000000000000000F /* Project object */;
 }

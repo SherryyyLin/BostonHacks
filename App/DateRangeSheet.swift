@@ -139,8 +139,8 @@ struct DateRangeSheet: View {
                 .background(.regularMaterial)
             }
             .onAppear {
-                draftStart = startDate
-                draftEnd = endDate
+                draftStart = startDate == .distantPast ? defaultRangeStart() : startDate
+                draftEnd = endDate == .distantFuture ? defaultRangeEnd() : endDate
                 step = initialStep == 1 ? 1 : 0
                 keepEndAfterStart(draftStart)
             }

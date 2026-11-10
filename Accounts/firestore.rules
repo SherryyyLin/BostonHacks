@@ -1,0 +1,27 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function owns(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+    match /users/{uid}/savedEvents/{eventKey} {
+      allow read, delete: if owns(uid);
+      allow create, update: if owns(uid)
+        && eventKey.matches('[a-f0-9]{64}')
+        && request.resource.data.keys().hasOnly(['sourceID', 'name', 'startDate', 'updatedAt'])
+        && request.resource.data.keys().hasAll(['sourceID', 'name', 'startDate', 'updatedAt'])
+        && request.resource.data.sourceID is string
+        && request.resource.data.sourceID.size() > 0
+        && request.resource.data.sourceID.size() <= 1500
+        && request.resource.data.name is string
+        && request.resource.data.name.size() <= 500
+        && request.resource.data.startDate is timestamp
+        && request.resource.data.updatedAt == request.time;
+    }
+    // The app's public event catalog comes from the read-only public feed.
+    // No client may write another user's data or create unrestricted collections.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

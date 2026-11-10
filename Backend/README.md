@@ -73,3 +73,8 @@ python3 Backend/collector.py \
 Expected filenames: `luma-all-1.json`, `luma-hackathon-1.json`, `luma-datathon-1.json`, `luma-game-jam-1.json`, `toa.ics`, `mit-1.json`, `northeastern-1.json`; add `-2`, etc. if source metadata returns another page. Missing fixtures count as failed sources, exercising preservation logic. A fixture health report is explicitly marked `mode: fixtures`, so it cannot be mistaken for a fresh online check.
 
 Public endpoints and schemas can change. A parser failure is reported instead of silently replacing good data with an empty feed. Add a new source only after inspecting its actual published format and eligibility/status semantics.
+
+
+## Latest observed deployment check
+
+The [second successful workflow run](https://github.com/SherryyyLin/BostonHacks/actions/runs/42737765265) on November 9, 2026 at 8:43 PM Eastern executed the updated **16 tests**, fetched all **seven configured source jobs** successfully and published **17 deduplicated records**. The complete app commit is [8f6f2c6](https://github.com/SherryyyLin/BostonHacks/commit/8f6f2c683e7889187e80e9744773b2cd222a7c8f). The public raw feed was independently fetched without authentication; it includes the separately reviewed Spaulding January 2027 record. LinkedIn remains a curated discovery source, not an eighth scheduled source.

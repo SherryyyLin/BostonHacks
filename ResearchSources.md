@@ -37,20 +37,13 @@ The geographic scope is **Greater Boston**, including Cambridge, Medford, Chestn
 
 The included backend was run against all seven configured source jobs on November 9, 2026; all succeeded and generated **16 deduplicated records** with source-health metadata. The collector is now deployed in [SherryyyLin/BostonHacks](https://github.com/SherryyyLin/BostonHacks); its [first successful GitHub Actions run](https://github.com/SherryyyLin/BostonHacks/actions/runs/42716474929) on November 9 at 5:58 PM Eastern repeated all seven source jobs successfully and committed the 16-record feed. Its default-branch schedule repeats every three hours, subject to GitHub queue delays. In-app foreground checks run independently; the app cannot execute indefinitely while suspended.
 
+The [second workflow run](https://github.com/SherryyyLin/BostonHacks/actions/runs/42737765265) succeeded on November 9, 2026 at **8:43 PM Eastern**, after the complete iPhone app was published. Actual logs report **16 passing tests**, **seven successful source jobs** and **17 records**. The additional record is the separately reviewed LinkedIn discovery for Spaulding in January 2027; this does not make LinkedIn an automated source job. The deployed public event and health JSON were read back successfully.
+
 No fixed event count is a claim of complete coverage. New records can appear as publishers add them; disappearing listings are not automatically assumed cancelled. Hidden addresses/coordinates are not exposed as native map pins. Source status remains a link to the organizer’s current admission page.
 
-## Boston landmarks and decorative motifs
+## Map scope
 
-**Make Way for Ducklings** is Nancy Schön’s bronze sculpture of Mrs. Mallard and eight ducklings in the Public Garden, near **Beacon and Charles Streets**. Both [the artist’s own record](https://www.schon.com/public/ducklings-boston.php) and [Friends of the Public Garden](https://friendsofthepublicgarden.org/our-parks/the-garden/) establish its identity and location. A map location should be resolved from that published landmark name, not the park steward’s office address.
-
-**Freedom Trail — Boston Common starting point** uses the official visitor-center address, **139 Tremont Street, Boston, MA 02111**, published by [the Freedom Trail Foundation](https://www.thefreedomtrail.org/trail-sites/boston-common) and its [directions page](https://www.thefreedomtrail.org/visit/directions-parking). A start-point pin is not a surveyed rendering of the entire trail.
-
-**Pink Chicken Project — MIT Museum:** the MIT clarification led to the real work by **Nonhuman Nonsense**, displayed in **Gene Cultures**. An [official MIT News opening article](https://news.mit.edu/2022/mit-museum-opening-0930) includes a gallery photograph whose description explicitly identifies a pink chicken. The [artists’ own project page](https://nonhuman-nonsense.com/pink-chicken-project) lists the MIT exhibition as **October 2, 2022–2024**, under previous exhibitions. A [participating artist’s university announcement](https://art.cmu.edu/news/faculty-news/rich-pell-exhibition-university-of-michigan/) also describes the exhibition’s final month in 2024. This establishes its identity and past display, **not current availability** or a permanent outdoor sculpture. The map therefore identifies MIT Museum and tells users to check current displays.
-
-MIT Museum’s address is **314 Main Street, E28, Cambridge, MA 02142**, confirmed by the [official MIT directory](https://officesdirectory.mit.edu/mit-museum). [MIT Capital Projects](https://capitalprojects.mit.edu/projects/mit-museum) also publishes the museum building’s coordinates, **42.3623, −71.0868**; this is a museum location, not an exact indoor object position. The museum’s own exhibition page returned HTTP 429 during this check, so it was not used to claim a current display.
-
-Other optional Freedom Trail highlights link individually to the Foundation’s records: [Massachusetts State House](https://www.thefreedomtrail.org/trail-sites/massachusetts-state-house), [Faneuil Hall](https://www.thefreedomtrail.org/trail-sites/faneuil-hall), and [Old North Church](https://www.thefreedomtrail.org/trail-sites/old-north-church). The feature displays landmark pins, not an invented complete walking route. All sightseeing destinations remain separate from hackathon venues and visually distinct from the 🤖 event markers.
-
+The final app map displays only hackathon venue robot pins. It does not include Boston sightseeing destinations, decorative bird locations, walking-trail routes or a starting-point marker. Public venue coordinates or successfully geocoded published venue names/addresses are required; online, hidden and unknown locations stay off the map. Starting coordinates remain usable for distance sorting and native transit directions.
 
 ## LinkedIn discovery checks
 

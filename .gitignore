@@ -1,0 +1,12 @@
+.DS_Store
+xcuserdata/
+*.xcuserstate
+__pycache__/
+*.pyc
+.build/
+DerivedData/
+App/GoogleService-Info.plist
+*.mobileprovision
+.env
+.env.*
+
