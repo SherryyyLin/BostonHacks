@@ -89,7 +89,7 @@
     "sourceURL": "https://luma.com/8iq9qh08",
     "status": "Approval required",
     "format": "In person",
-    "checkedAt": "2026-11-11T06:25:53Z"
+    "checkedAt": "2026-11-11T17:10:04Z"
   },
   {
     "id": "https://luma.com/wsyijrny",
@@ -107,7 +107,7 @@
     "sourceURL": "https://luma.com/wsyijrny",
     "status": "Registration open",
     "format": "In person",
-    "checkedAt": "2026-11-11T06:25:53Z",
+    "checkedAt": "2026-11-11T17:10:04Z",
     "latitude": 42.350136400000004,
     "longitude": -71.1045657
   },
@@ -145,7 +145,7 @@
     "sourceURL": "https://luma.com/claude-hovn",
     "status": "Approval required",
     "format": "In person",
-    "checkedAt": "2026-11-11T06:25:53Z",
+    "checkedAt": "2026-11-11T17:10:04Z",
     "latitude": 42.33728910000001,
     "longitude": -71.09128679999999
   },
@@ -201,7 +201,7 @@
     "sourceURL": "https://luma.com/0iufmn6q",
     "status": "Approval required",
     "format": "In person",
-    "checkedAt": "2026-11-11T06:25:53Z",
+    "checkedAt": "2026-11-11T17:10:04Z",
     "latitude": 42.3731581,
     "longitude": -71.12022619999999
   },
@@ -221,7 +221,7 @@
     "sourceURL": "https://luma.com/gfi154ck",
     "status": "Approval required",
     "format": "In person",
-    "checkedAt": "2026-11-11T06:25:53Z",
+    "checkedAt": "2026-11-11T17:10:04Z",
     "latitude": 42.3522258,
     "longitude": -71.0579393
   },
@@ -241,7 +241,7 @@
     "sourceURL": "https://luma.com/48pyd0o8",
     "status": "Registration open",
     "format": "In person",
-    "checkedAt": "2026-11-11T06:25:53Z"
+    "checkedAt": "2026-11-11T17:10:04Z"
   },
   {
     "id": "https://www.mitpolicyhackathon.org/",
@@ -313,7 +313,7 @@
     "sourceURL": "https://luma.com/pbsv71az",
     "status": "Approval required",
     "format": "In person",
-    "checkedAt": "2026-11-11T06:25:53Z",
+    "checkedAt": "2026-11-11T17:10:04Z",
     "latitude": 42.3699508,
     "longitude": -71.0707343
   },
