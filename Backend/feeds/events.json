@@ -89,7 +89,7 @@
     "sourceURL": "https://luma.com/8iq9qh08",
     "status": "Approval required",
     "format": "In person",
-    "checkedAt": "2026-11-10T23:24:27Z"
+    "checkedAt": "2026-11-11T06:25:53Z"
   },
   {
     "id": "https://luma.com/wsyijrny",
@@ -107,7 +107,7 @@
     "sourceURL": "https://luma.com/wsyijrny",
     "status": "Registration open",
     "format": "In person",
-    "checkedAt": "2026-11-10T23:24:27Z",
+    "checkedAt": "2026-11-11T06:25:53Z",
     "latitude": 42.350136400000004,
     "longitude": -71.1045657
   },
@@ -145,7 +145,7 @@
     "sourceURL": "https://luma.com/claude-hovn",
     "status": "Approval required",
     "format": "In person",
-    "checkedAt": "2026-11-10T23:24:27Z",
+    "checkedAt": "2026-11-11T06:25:53Z",
     "latitude": 42.33728910000001,
     "longitude": -71.09128679999999
   },
@@ -201,7 +201,7 @@
     "sourceURL": "https://luma.com/0iufmn6q",
     "status": "Approval required",
     "format": "In person",
-    "checkedAt": "2026-11-10T23:24:27Z",
+    "checkedAt": "2026-11-11T06:25:53Z",
     "latitude": 42.3731581,
     "longitude": -71.12022619999999
   },
@@ -221,7 +221,7 @@
     "sourceURL": "https://luma.com/gfi154ck",
     "status": "Approval required",
     "format": "In person",
-    "checkedAt": "2026-11-10T23:24:27Z",
+    "checkedAt": "2026-11-11T06:25:53Z",
     "latitude": 42.3522258,
     "longitude": -71.0579393
   },
@@ -241,7 +241,7 @@
     "sourceURL": "https://luma.com/48pyd0o8",
     "status": "Registration open",
     "format": "In person",
-    "checkedAt": "2026-11-10T23:24:27Z"
+    "checkedAt": "2026-11-11T06:25:53Z"
   },
   {
     "id": "https://www.mitpolicyhackathon.org/",
@@ -296,6 +296,26 @@
     "format": "In person",
     "schedule": "Nov 21, 9:30 AM check-in → Nov 22, 4:30 PM closing ends · ET.",
     "checkedAt": "2026-11-09T22:19:44Z"
+  },
+  {
+    "id": "https://luma.com/pbsv71az",
+    "name": "Lovable x Hult: Buildathon",
+    "organizer": "MAIC",
+    "startDate": "2026-12-06T16:00:00Z",
+    "endDate": "2026-12-06T21:30:00Z",
+    "schedule": "Dec 06, 2026 11:00 AM – Dec 06, 2026 04:30 PM ET",
+    "venue": "Hult International Business School",
+    "address": "Hult International Business School, 1 Education St, Cambridge, MA 02141, USA",
+    "cost": "Free",
+    "eligibility": "See organizer eligibility",
+    "notes": "Discovered from Luma’s public Boston event index. Open the organizer page for the full brief, eligibility and current admission terms. A public listing does not guarantee admission.",
+    "website": "https://luma.com/pbsv71az",
+    "sourceURL": "https://luma.com/pbsv71az",
+    "status": "Approval required",
+    "format": "In person",
+    "checkedAt": "2026-11-11T06:25:53Z",
+    "latitude": 42.3699508,
+    "longitude": -71.0707343
   },
   {
     "id": "linkedin:mithackingmedicine-spaulding-2027",
