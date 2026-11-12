@@ -89,7 +89,7 @@
     "sourceURL": "https://luma.com/8iq9qh08",
     "status": "Approval required",
     "format": "In person",
-    "checkedAt": "2026-11-12T11:15:50Z"
+    "checkedAt": "2026-11-12T19:55:51Z"
   },
   {
     "id": "https://luma.com/wsyijrny",
@@ -107,7 +107,7 @@
     "sourceURL": "https://luma.com/wsyijrny",
     "status": "Registration open",
     "format": "In person",
-    "checkedAt": "2026-11-12T11:15:50Z",
+    "checkedAt": "2026-11-12T19:55:51Z",
     "latitude": 42.350136400000004,
     "longitude": -71.1045657
   },
@@ -145,7 +145,7 @@
     "sourceURL": "https://luma.com/claude-hovn",
     "status": "Approval required",
     "format": "In person",
-    "checkedAt": "2026-11-12T11:15:50Z",
+    "checkedAt": "2026-11-12T19:55:51Z",
     "latitude": 42.33728910000001,
     "longitude": -71.09128679999999
   },
@@ -192,18 +192,16 @@
     "startDate": "2026-11-15T15:00:00Z",
     "endDate": "2026-11-15T22:00:00Z",
     "schedule": "Nov 15, 2026 10:00 AM – Nov 15, 2026 05:00 PM ET",
-    "venue": "Floor 3",
-    "address": "20 Brattle St, Cambridge, MA 02138, USA",
+    "venue": "Location shared by organizer",
+    "address": "",
     "cost": "Free",
     "eligibility": "See organizer eligibility",
     "notes": "Discovered from Luma’s public Boston event index. Open the organizer page for the full brief, eligibility and current admission terms. A public listing does not guarantee admission.",
     "website": "https://luma.com/0iufmn6q",
     "sourceURL": "https://luma.com/0iufmn6q",
-    "status": "Approval required",
+    "status": "Sold out",
     "format": "In person",
-    "checkedAt": "2026-11-12T11:15:50Z",
-    "latitude": 42.3731581,
-    "longitude": -71.12022619999999
+    "checkedAt": "2026-11-12T19:55:51Z"
   },
   {
     "id": "https://luma.com/gfi154ck",
@@ -221,7 +219,7 @@
     "sourceURL": "https://luma.com/gfi154ck",
     "status": "Approval required",
     "format": "In person",
-    "checkedAt": "2026-11-12T11:15:50Z",
+    "checkedAt": "2026-11-12T19:55:51Z",
     "latitude": 42.3522258,
     "longitude": -71.0579393
   },
@@ -241,7 +239,7 @@
     "sourceURL": "https://luma.com/48pyd0o8",
     "status": "Registration open",
     "format": "In person",
-    "checkedAt": "2026-11-12T11:15:50Z"
+    "checkedAt": "2026-11-12T19:55:51Z"
   },
   {
     "id": "https://www.mitpolicyhackathon.org/",
@@ -313,7 +311,7 @@
     "sourceURL": "https://luma.com/pbsv71az",
     "status": "Approval required",
     "format": "In person",
-    "checkedAt": "2026-11-12T11:15:50Z",
+    "checkedAt": "2026-11-12T19:55:51Z",
     "latitude": 42.3699508,
     "longitude": -71.0707343
   },
