@@ -163,7 +163,7 @@
     "notes": "Build projects using NASA open data in a virtual Boston community hackathon. Coding experience is not required. Each team member registers individually. Confirm ticket availability and final joining instructions on the organizer’s event page.",
     "website": "https://www.eventbrite.com/e/nasa-space-apps-challenge-2026-boston-tickets-1997389842788",
     "sourceURL": "https://www.eventbrite.com/e/nasa-space-apps-challenge-2026-boston-tickets-1997389842788",
-    "status": "Event listed · Check ticket availability",
+    "status": "Ended",
     "format": "Online",
     "checkedAt": "2026-11-09T22:25:25Z"
   },
@@ -199,7 +199,7 @@
     "notes": "Discovered from Luma’s public Boston event index. Open the organizer page for the full brief, eligibility and current admission terms. A public listing does not guarantee admission.",
     "website": "https://luma.com/0iufmn6q",
     "sourceURL": "https://luma.com/0iufmn6q",
-    "status": "Check organizer page",
+    "status": "Ended",
     "format": "In person",
     "checkedAt": "2026-11-15T16:22:57Z"
   },
@@ -219,7 +219,7 @@
     "sourceURL": "https://luma.com/gfi154ck",
     "status": "Approval required",
     "format": "In person",
-    "checkedAt": "2026-11-15T16:22:57Z",
+    "checkedAt": "2026-11-15T22:50:23Z",
     "latitude": 42.3522258,
     "longitude": -71.0579393
   },
@@ -239,7 +239,7 @@
     "sourceURL": "https://luma.com/48pyd0o8",
     "status": "Registration open",
     "format": "In person",
-    "checkedAt": "2026-11-15T16:22:57Z"
+    "checkedAt": "2026-11-15T22:50:23Z"
   },
   {
     "id": "https://www.mitpolicyhackathon.org/",
@@ -275,7 +275,7 @@
     "sourceURL": "https://luma.com/yiif4l7u",
     "status": "Registration open",
     "format": "In person",
-    "checkedAt": "2026-11-15T16:22:57Z",
+    "checkedAt": "2026-11-15T22:50:23Z",
     "latitude": 42.3626821,
     "longitude": -71.08644199999999
   },
@@ -331,7 +331,7 @@
     "sourceURL": "https://luma.com/pbsv71az",
     "status": "Approval required",
     "format": "In person",
-    "checkedAt": "2026-11-15T16:22:57Z",
+    "checkedAt": "2026-11-15T22:50:23Z",
     "latitude": 42.3699508,
     "longitude": -71.0707343
   },
