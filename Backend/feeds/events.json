@@ -217,7 +217,7 @@
     "notes": "Discovered from Luma’s public Boston event index. Open the organizer page for the full brief, eligibility and current admission terms. A public listing does not guarantee admission.",
     "website": "https://luma.com/gfi154ck",
     "sourceURL": "https://luma.com/gfi154ck",
-    "status": "Waitlist available",
+    "status": "Ended",
     "format": "In person",
     "checkedAt": "2026-11-17T16:02:28Z",
     "latitude": 42.3522258,
@@ -239,7 +239,7 @@
     "sourceURL": "https://luma.com/48pyd0o8",
     "status": "Waitlist available",
     "format": "In person",
-    "checkedAt": "2026-11-17T16:02:28Z"
+    "checkedAt": "2026-11-18T00:58:28Z"
   },
   {
     "id": "https://www.mitpolicyhackathon.org/",
@@ -275,7 +275,7 @@
     "sourceURL": "https://luma.com/yiif4l7u",
     "status": "Approval required",
     "format": "In person",
-    "checkedAt": "2026-11-17T16:02:28Z",
+    "checkedAt": "2026-11-18T00:58:28Z",
     "latitude": 42.3626821,
     "longitude": -71.08644199999999
   },
@@ -331,7 +331,7 @@
     "sourceURL": "https://luma.com/spacexai-afy3",
     "status": "Approval required",
     "format": "In person",
-    "checkedAt": "2026-11-17T16:02:28Z",
+    "checkedAt": "2026-11-18T00:58:28Z",
     "latitude": 42.3632205,
     "longitude": -71.12447259999999
   },
@@ -351,9 +351,29 @@
     "sourceURL": "https://luma.com/pbsv71az",
     "status": "Approval required",
     "format": "In person",
-    "checkedAt": "2026-11-17T16:02:28Z",
+    "checkedAt": "2026-11-18T00:58:28Z",
     "latitude": 42.3699508,
     "longitude": -71.0707343
+  },
+  {
+    "id": "https://luma.com/a66mv0zw",
+    "name": "Hack the Holidays: Workshop & Build Event Sponsored by Lovable",
+    "organizer": "MAIC",
+    "startDate": "2026-12-08T22:30:00Z",
+    "endDate": "2026-12-09T00:30:00Z",
+    "schedule": "Dec 08, 2026 05:30 PM – Dec 08, 2026 07:30 PM ET",
+    "venue": "Workbar Downtown, 2nd floor.",
+    "address": "24 School St, Boston, MA 02108, USA",
+    "cost": "Free",
+    "eligibility": "See organizer eligibility",
+    "notes": "Discovered from Luma’s public Boston event index. Open the organizer page for the full brief, eligibility and current admission terms. A public listing does not guarantee admission.",
+    "website": "https://luma.com/a66mv0zw",
+    "sourceURL": "https://luma.com/a66mv0zw",
+    "status": "Registration open",
+    "format": "In person",
+    "checkedAt": "2026-11-18T00:58:28Z",
+    "latitude": 42.357596199999996,
+    "longitude": -71.0592206
   },
   {
     "id": "https://luma.com/mis6jjh3",

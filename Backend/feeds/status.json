@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-17T16:02:28Z",
+  "generatedAt": "2026-11-18T00:58:28Z",
   "mode": "live",
-  "eventCount": 21,
+  "eventCount": 22,
   "sourcesSucceeded": 7,
   "sourceCount": 7,
   "partialFailure": false,
@@ -11,49 +11,49 @@
     {
       "source": "luma-all",
       "ok": true,
-      "checkedAt": "2026-11-17T16:02:28Z",
-      "matchingEvents": 1,
+      "checkedAt": "2026-11-18T00:58:28Z",
+      "matchingEvents": 0,
       "pages": 2
     },
     {
       "source": "luma-hackathon",
       "ok": true,
-      "checkedAt": "2026-11-17T16:02:28Z",
-      "matchingEvents": 6,
+      "checkedAt": "2026-11-18T00:58:28Z",
+      "matchingEvents": 5,
       "pages": 1
     },
     {
       "source": "luma-datathon",
       "ok": true,
-      "checkedAt": "2026-11-17T16:02:28Z",
-      "matchingEvents": 6,
+      "checkedAt": "2026-11-18T00:58:28Z",
+      "matchingEvents": 5,
       "pages": 1
     },
     {
       "source": "luma-game jam",
       "ok": true,
-      "checkedAt": "2026-11-17T16:02:28Z",
-      "matchingEvents": 2,
+      "checkedAt": "2026-11-18T00:58:28Z",
+      "matchingEvents": 1,
       "pages": 1
     },
     {
       "source": "toa",
       "ok": true,
-      "checkedAt": "2026-11-17T16:02:28Z",
+      "checkedAt": "2026-11-18T00:58:28Z",
       "matchingEvents": 2,
       "pages": 1
     },
     {
       "source": "mit",
       "ok": true,
-      "checkedAt": "2026-11-17T16:02:28Z",
+      "checkedAt": "2026-11-18T00:58:28Z",
       "matchingEvents": 0,
       "pages": 1
     },
     {
       "source": "northeastern",
       "ok": true,
-      "checkedAt": "2026-11-17T16:02:28Z",
+      "checkedAt": "2026-11-18T00:58:28Z",
       "matchingEvents": 0,
       "pages": 1
     }
